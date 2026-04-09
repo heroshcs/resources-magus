@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prep Call Agent — Acesso Gratuito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:           #08080f;
+    --bg-card:      #10101c;
+    --purple:       #7c3aed;
+    --purple-light: #a78bfa;
+    --purple-dim:   #2d1b69;
+    --purple-glow:  rgba(124,58,237,0.15);
+    --white:        #f1f0ff;
+    --gray:         #94a3b8;
+    --gray-light:   #cbd5e1;
+    --border:       rgba(124,58,237,0.25);
+    --green:        #10b981;
+    --font-display: 'DM Sans', sans-serif;
+    --font-body:    'DM Sans', sans-serif;
+    --radius:       14px;
+  }
+
+  html, body {
+    min-height: 100vh;
+    background: var(--bg);
+    font-family: var(--font-body);
+    color: var(--gray-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    overflow-x: hidden;
+  }
+
+  /* Glow blobs */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -200px;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Logo */
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  .logo-text {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--purple-light);
+  }
+
+  /* Card */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Eyebrow */
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--purple-light);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background: var(--purple);
+  }
+
+  /* Heading */
+  h1 {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+
+  h1 span {
+    background: linear-gradient(135deg, #a78bfa, #7c3aed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .desc {
+    font-size: 14px;
+    color: var(--gray);
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+
+  /* What you get */
+  .benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 32px;
+    padding: 20px;
+    background: rgba(124,58,237,0.07);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+
+  .benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--gray-light);
+    line-height: 1.5;
+  }
+
+  .benefit-item::before {
+    content: '◆';
+    color: var(--purple-light);
+    font-size: 7px;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+
+  /* Form */
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray);
+    letter-spacing: 0.05em;
+  }
+
+  input {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(124,58,237,0.3);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--white);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+  }
+
+  input::placeholder { color: rgba(148,163,184,0.4); }
+
+  input:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 0 3px rgba(124,58,237,0.15);
+  }
+
+  input.error {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239,68,68,0.1);
+  }
+
+  .error-msg {
+    font-size: 11.5px;
+    color: #f87171;
+    display: none;
+    margin-top: 2px;
+  }
+
+  .error-msg.visible { display: block; }
+
+  /* Submit button */
+  .btn {
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+    border: none;
+    border-radius: 10px;
+    padding: 14px 24px;
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    letter-spacing: 0.02em;
+    box-shadow: 0 4px 20px rgba(124,58,237,0.35);
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 28px rgba(124,58,237,0.45);
+  }
+
+  .btn:active { transform: translateY(0); }
+
+  .btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-icon { font-size: 16px; }
+
+  /* Loading spinner */
+  .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Privacy note */
+  .privacy {
+    text-align: center;
+    font-size: 11.5px;
+    color: rgba(148,163,184,0.5);
+    margin-top: 16px;
+    line-height: 1.6;
+  }
+
+  .privacy a {
+    color: rgba(167,139,250,0.6);
+    text-decoration: none;
+  }
+
+  /* Success state */
+  .success-state {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    padding: 20px 0;
+  }
+
+  .success-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(16,185,129,0.15);
+    border: 1px solid rgba(16,185,129,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+  }
+
+  .success-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .success-desc {
+    font-size: 14px;
+    color: var(--gray);
+    line-height: 1.7;
+    max-width: 320px;
+  }
+
+  .success-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+    color: white;
+    text-decoration: none;
+    padding: 13px 28px;
+    border-radius: 10px;
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    box-shadow: 0 4px 20px rgba(124,58,237,0.35);
+    transition: all 0.2s;
+    margin-top: 4px;
+  }
+
+  .success-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 28px rgba(124,58,237,0.45);
+  }
+
+  /* Footer */
+  .footer-note {
+    text-align: center;
+    margin-top: 28px;
+    font-size: 12px;
+    color: rgba(148,163,184,0.35);
+  }
+
+  .footer-note a {
+    color: rgba(167,139,250,0.45);
+    text-decoration: none;
+  }
+
+  @media (max-width: 520px) {
+    .card { padding: 28px 24px; }
+    h1 { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="logo">
+    <span class="logo-text">Magus</span>
+  </div>
+
+  <div class="card">
+
+    <div class="eyebrow">Acesso gratuito</div>
+
+    <h1>Prep Call Agent<br><span>Guia de Instalação</span></h1>
+
+    <p class="desc">
+      Configure em menos de 10 minutos um agente que lê sua agenda às 18h
+      e envia um briefing completo antes de cada reunião externa.
+    </p>
+
+    <div class="benefits">
+      <div class="benefit-item">Setup completo em menos de 10 minutos</div>
+      <div class="benefit-item">Briefing automático antes de cada reunião</div>
+      <div class="benefit-item">Deep Search na empresa e nos participantes</div>
+      <div class="benefit-item">3 perguntas de Discovery prontas para usar</div>
+    </div>
+
+    <!-- Form -->
+    <div class="form" id="formSection">
+      <div class="field">
+        <label for="nome">Seu nome</label>
+        <input type="text" id="nome" placeholder="Como você se chama?" autocomplete="given-name">
+        <span class="error-msg" id="nomeError">Por favor, informe seu nome.</span>
+      </div>
+
+      <div class="field">
+        <label for="email">Email corporativo</label>
+        <input type="email" id="email" placeholder="voce@suaempresa.com" autocomplete="email">
+        <span class="error-msg" id="emailError">Por favor, informe um email válido.</span>
+      </div>
+
+      <button class="btn" id="submitBtn" onclick="handleSubmit()">
+        <span class="btn-icon">⚡</span>
+        <span id="btnText">Acessar o guia gratuitamente</span>
+        <div class="spinner" id="spinner"></div>
+      </button>
+
+      <p class="privacy">
+        Sem spam. Seus dados são usados apenas para enviar conteúdo relevante.<br>
+        Ao continuar você concorda com nossa <a href="https://magus-app.com/terms-and-conditions" target="_blank">política de privacidade</a>.
+      </p>
+    </div>
+
+    <!-- Success -->
+    <div class="success-state" id="successSection">
+      <div class="success-icon">✓</div>
+      <div class="success-title">Tudo certo!</div>
+      <p class="success-desc">
+        Seu acesso está liberado. Clique abaixo para abrir o guia de instalação.
+      </p>
+      <a class="success-btn" href="https://resources.magus-app.com/prep-call-agent" target="_blank">
+        Abrir o guia de instalação →
+      </a>
+    </div>
+
+  </div>
+
+  <div class="footer-note">
+    <a href="https://magus-app.com" target="_blank">magus-app.com</a> · The AI Clarity System for Revenue Teams
+  </div>
+
+</div>
+
+<script>
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxNRBYvM6OW4MR01klGKQL-w9v6J-72I1Npab0dkAIVDWlZot5jiM7JOrrUHFHhlz4OkA/exec';
+  const REDIRECT   = 'https://resources.magus-app.com/prep-call-agent';
+
+  const PERSONAL_DOMAINS = [
+    'gmail.com','googlemail.com','hotmail.com','hotmail.com.br',
+    'outlook.com','outlook.com.br','yahoo.com','yahoo.com.br',
+    'yahoo.com.ar','icloud.com','me.com','mac.com','live.com',
+    'live.com.br','msn.com','uol.com.br','bol.com.br','terra.com.br',
+    'ig.com.br','r7.com','globomail.com','protonmail.com','pm.me',
+    'tutanota.com','zohomail.com','aol.com','ymail.com','rocketmail.com'
+  ];
+
+  function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function isCorporateEmail(email) {
+    const domain = email.split('@')[1]?.toLowerCase();
+    if (!domain) return false;
+    return !PERSONAL_DOMAINS.includes(domain);
+  }
+
+  function setLoading(on) {
+    const btn     = document.getElementById('submitBtn');
+    const spinner = document.getElementById('spinner');
+    const text    = document.getElementById('btnText');
+    btn.disabled    = on;
+    spinner.style.display = on ? 'block' : 'none';
+    text.textContent = on ? 'Enviando...' : 'Acessar o guia gratuitamente';
+  }
+
+  function showError(fieldId, msgId, show) {
+    const input = document.getElementById(fieldId);
+    const msg   = document.getElementById(msgId);
+    input.classList.toggle('error', show);
+    msg.classList.toggle('visible', show);
+  }
+
+  async function handleSubmit() {
+    const nome  = document.getElementById('nome').value.trim();
+    const email = document.getElementById('email').value.trim();
+
+    // Validate
+    let valid = true;
+    if (!nome) { showError('nome', 'nomeError', true); valid = false; }
+    else         showError('nome', 'nomeError', false);
+
+    if (!validateEmail(email)) {
+      showError('email', 'emailError', true);
+      document.getElementById('emailError').textContent = 'Por favor, informe um email válido.';
+      valid = false;
+    } else if (!isCorporateEmail(email)) {
+      showError('email', 'emailError', true);
+      document.getElementById('emailError').textContent = 'Por favor, use seu email corporativo (não Gmail, Hotmail ou similar).';
+      valid = false;
+    } else {
+      showError('email', 'emailError', false);
+    }
+
+    if (!valid) return;
+
+    setLoading(true);
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome, email })
+      });
+    } catch (e) {
+      // no-cors always throws on response read — ignore, data was sent
+    }
+
+    // Show success regardless (no-cors doesn't return readable response)
+    setLoading(false);
+    document.getElementById('formSection').style.display    = 'none';
+    document.getElementById('successSection').style.display = 'flex';
+  }
+
+  // Allow Enter key to submit
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') handleSubmit();
+  });
+</script>
+
+</body>
+</html>
